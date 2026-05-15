@@ -59,7 +59,15 @@ export default function TabsLayout() {
           tabBarIcon: () => <TabIcon name="🏆" />,
         }}
       />
-      {/* Profile tab - user stats and info */}
+            {/* Maps tab - hkim / position du joueur */}
+      <Tabs.Screen
+        name="maps"
+        options={{
+          title: t('map') ?? 'Carte',
+          tabBarIcon: () => <TabIcon name="🗺️" />,
+        }}
+      />
+      {/* Profile tab - user stats and account info */}
       <Tabs.Screen
         name="profile"
         options={{

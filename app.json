@@ -5,11 +5,55 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "splash": { "image": "./assets/splash.png", "resizeMode": "contain", "backgroundColor": "#DC2626" },
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#DC2626"
+    },
     "scheme": "sallycards",
-    "ios": { "bundleIdentifier": "com.sallycards.ronda", "supportsTablet": true },
-    "android": { "package": "com.sallycards.ronda", "adaptiveIcon": { "foregroundImage": "./assets/adaptive-icon.png", "backgroundColor": "#DC2626" }, "usesCleartextTraffic": true },
-    "plugins": ["expo-router", "expo-localization", "expo-font"],
-    "newArchEnabled": true, "extra": { "eas": { "projectId": "sallycards-ronda" } }
+    "ios": {
+      "bundleIdentifier": "com.sallycards.ronda",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Ronda utilise votre position pour la carte des hkim."
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyAa1lBSroSXA-Om4mio84-SWAcmzQgYv8w"
+      }
+    },
+    "android": {
+      "package": "com.sallycards.ronda",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#DC2626"
+      },
+      "usesCleartextTraffic": true,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAa1lBSroSXA-Om4mio84-SWAcmzQgYv8w"
+        }
+      }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-localization",
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Ronda utilise votre position pour la carte des hkim."
+        }
+      ]
+    ],
+    "newArchEnabled": true,
+    "extra": {
+      "eas": {
+        "projectId": "sallycards-ronda"
+      }
+    }
   }
 }
