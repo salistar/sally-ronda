@@ -33,20 +33,15 @@ export default function CreateRoomScreen() {
   const [isPrivate, setIsPrivate] = useState(false);
   const [creating, setCreating] = useState(false);
 
-  const handleCreate = async () => {
-    setCreating(true);
-    try {
-      log.bin('POST /rooms', { gameType: 'ronda', maxPlayers, isPrivate });
-      const room = await api.createRoomFull('ronda', { maxPlayers, isPrivate });
-      log.bout('201 /rooms', { code: room.code, mode: room.mode });
-      log.explain(`room ${room.code} créée (${room.mode}, max ${maxPlayers}j) → navigation vers le lobby`);
-      router.replace(`/room/lobby?code=${room.code}`);
-    } catch (e: any) {
-      log.error('createRoom failed', e?.message);
-      Alert.alert(t('error'), e?.message || t('cantCreateRoom'));
-    } finally {
-      setCreating(false);
-    }
+  const handleCreate = () => {
+    // Créer = générer un code et entrer DIRECTEMENT dans la table temps réel
+    // /game (comme le web). Le code s'affiche en jeu ; partage-le pour qu'un
+    // autre joueur (web OU mobile) rejoigne la MÊME table. Pas de lobby
+    // MongoDB → pas de blocage « 2 joueurs requis » pour le cross-play.
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const newCode = Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    log.explain(`Créer room ${newCode} → table /game directe (partage le code pour le cross-play)`);
+    router.replace(`/game/${newCode}`);
   };
 
   const styles = createStyles(palette);

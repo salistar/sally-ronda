@@ -4,7 +4,7 @@
  * @project SallyCards - Ronda
  */
 
-import React, { useReducer, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useReducer, useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -15,7 +15,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -31,6 +31,14 @@ import {
   botShouldAnnounce,
   findCaptures,
 } from '../../src/game/rondaEngine';
+import {
+  parseDifficulty,
+  BOT_PRESETS,
+  thinkDelay,
+  shouldRandomize,
+  difficultyBadge,
+  difficultyColor,
+} from '@sally/game-engine';
 import { getCardImage, getCardBackImage } from '../../src/game/cardAssets';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -43,6 +51,9 @@ const BRAND_COLOR = '#e74c3c';
 
 export default function RondaLocalScreen() {
   const router = useRouter();
+  const params = useLocalSearchParams<{ difficulty?: string }>();
+  const difficulty = useMemo(() => parseDifficulty(params.difficulty), [params.difficulty]);
+  const botConfig = BOT_PRESETS[difficulty];
   const [state, dispatch] = useReducer(gameReducer, createInitialState());
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [message, setMessage] = useState<string>('');
@@ -86,7 +97,7 @@ export default function RondaLocalScreen() {
     return () => { if (botTimerRef.current) clearTimeout(botTimerRef.current); };
   }, [state.phase, state.currentPlayerIndex]);
 
-  // Bot play logic
+  // Bot play logic — délai dépendant du niveau + humanisation (shouldRandomize)
   useEffect(() => {
     if (state.phase !== 'playing') return;
     const current = getCurrentPlayer(state);
@@ -94,7 +105,12 @@ export default function RondaLocalScreen() {
 
     botTimerRef.current = setTimeout(() => {
       try {
-        const move = botPlay(state);
+        let move = botPlay(state);
+        // Humanisation : en easy/medium le bot rate parfois la capture
+        if (shouldRandomize(botConfig) && current.hand.length > 1) {
+          const randomCard = current.hand[Math.floor(Math.random() * current.hand.length)];
+          move = { cardId: randomCard.id, targetCardId: null } as any;
+        }
         dispatch({
           type: 'PLAY_CARD',
           playerId: current.id,
@@ -109,10 +125,10 @@ export default function RondaLocalScreen() {
       } catch {
         // Bot has no cards - should trigger redeal
       }
-    }, 1000 + Math.random() * 800);
+    }, thinkDelay(botConfig));
 
     return () => { if (botTimerRef.current) clearTimeout(botTimerRef.current); };
-  }, [state.phase, state.currentPlayerIndex]);
+  }, [state.phase, state.currentPlayerIndex, botConfig]);
 
   // Clear message after delay
   useEffect(() => {
@@ -189,6 +205,9 @@ export default function RondaLocalScreen() {
             <Ionicons name="arrow-back" size={22} color="#fff" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Ronda</Text>
+          <View style={[styles.diffBadge, { backgroundColor: difficultyColor(difficulty), marginRight: 6 }]}>
+            <Text style={styles.diffBadgeText}>{difficultyBadge(difficulty)}</Text>
+          </View>
           <View style={styles.scoreContainer}>
             <Text style={styles.scoreLabel}>Manche {state.roundNumber}</Text>
           </View>
@@ -342,6 +361,8 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   scoreLabel: { color: BRAND_COLOR, fontSize: 12, fontWeight: '700' },
+  diffBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 6 },
+  diffBadgeText: { color: '#fff', fontSize: 10, fontWeight: '900', letterSpacing: 1 },
   opponentArea: {
     paddingHorizontal: 16,
     paddingVertical: 8,

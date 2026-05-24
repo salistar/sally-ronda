@@ -22,6 +22,7 @@ import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import * as api from '../../shared/api';
+import { useGoogleSignIn } from '../../shared/googleAuth';
 import { APP_CONFIG } from '../../src/config/app.config';
 
 const APP_COLOR = APP_CONFIG.primary;
@@ -55,6 +56,51 @@ export default function LoginScreen() {
       Alert.alert(t('error'), e.message || t('loginError'));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const { promptAsync, ready: googleReady, missingClientId, missingNative } = useGoogleSignIn(
+    async (idToken: string) => {
+      setLoading(true);
+      try {
+        console.log('[Ronda/Login] Google id_token reçu → /auth/google');
+        await api.loginWithGoogle(idToken, { gameType: 'ronda' });
+        console.log('[Ronda/Login] Google login successful');
+        router.replace('/(tabs)');
+      } catch (e: any) {
+        console.error('[Ronda/Login] Google error:', e);
+        Alert.alert(t('error'), e.message || 'Google sign-in failed');
+      } finally {
+        setLoading(false);
+      }
+    },
+    (msg: string) => {
+      console.warn('[Ronda/Login] Google:', msg);
+      setLoading(false);
+    }
+  );
+
+  const handleGoogle = async () => {
+    if (missingClientId) {
+      Alert.alert(
+        'Configuration Google',
+        "EXPO_PUBLIC_GOOGLE_CLIENT_ID n'est pas défini. Renseignez le Client ID OAuth Google pour activer la connexion Google."
+      );
+      return;
+    }
+    if (missingNative) {
+      Alert.alert(
+        'Dev build requis',
+        "La connexion Google necessite un dev build : lancez `npx expo run:android` depuis le dossier de l'app, ce qui installe le module natif Google. Expo Go ne le supporte pas."
+      );
+      return;
+    }
+    setLoading(true);
+    try {
+      await promptAsync();
+    } catch (e: any) {
+      setLoading(false);
+      Alert.alert(t('error'), e?.message || 'Google sign-in failed');
     }
   };
 
@@ -115,6 +161,24 @@ export default function LoginScreen() {
             ) : (
               <Text style={s.buttonText}>{t('loginButton')}</Text>
             )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={s.googleButton}
+            onPress={handleGoogle}
+            disabled={loading}
+            activeOpacity={0.85}
+          >
+            <Image
+              source={require('../../assets/google-g.png')}
+              style={s.googleLogo}
+              resizeMode="contain"
+            />
+            <Text style={s.googleText}>
+              {missingNative
+                ? 'Google (dev build requis)'
+                : 'Continuer avec Google'}
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={s.guestButton} onPress={handleGuest} disabled={loading}>
@@ -184,6 +248,18 @@ const s = StyleSheet.create({
     borderColor: 'rgba(255,255,255,0.15)',
   },
   guestText: { color: '#9CA3AF', fontSize: 14, fontWeight: '600' },
+  googleButton: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    marginBottom: 12,
+  },
+  googleLogo: { width: 22, height: 22 },
+  googleText: { color: '#1F2937', fontSize: 15, fontWeight: '700' },
   credentials: {
     marginTop: 32,
     padding: 16,

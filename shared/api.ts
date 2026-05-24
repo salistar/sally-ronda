@@ -156,6 +156,34 @@ export async function login(email: string, password: string, options?: { gameTyp
   }
 }
 
+/**
+ * Google Sign-In : envoie l'id_token Google au backend (/auth/google),
+ * qui le verifie via Google tokeninfo et retourne les tokens JWT SallyCards.
+ */
+export async function loginWithGoogle(
+  idToken: string,
+  options?: { gameType?: string }
+) {
+  try {
+    const data = await fetchWithToken('/auth/google', {
+      method: 'POST',
+      body: JSON.stringify({ idToken, gameType: options?.gameType ?? 'ronda' }),
+    });
+
+    if (data.accessToken) {
+      authToken = data.accessToken;
+    }
+    if (data.refreshToken) {
+      refreshToken = data.refreshToken;
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Google login failed:', error);
+    throw error;
+  }
+}
+
 export async function register(
   email: string,
   username: string,

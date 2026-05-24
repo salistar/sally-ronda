@@ -17,7 +17,7 @@ export default function VsBotRedirect() {
   }, []);
 
   // Immediately redirect to the local game screen with bot configuration
-  return <Redirect href="/game/local?mode=bot&botCount=1" />;
+  return <Redirect href="/game/local?mode=bot&botCount=1&difficulty=hard" />;
 }
 
 /* === End of game/vs-bot.tsx — Kdoub — SallyCards === */
