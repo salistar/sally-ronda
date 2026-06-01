@@ -105,7 +105,7 @@
   "createSub": "2 a 10 jugadores",
   "join": "Unirse",
   "joinSub": "Por código o lista",
-  "vsGemini": "vs Bot",
+  "vsGemini": "vs Gemini",
   "vsGeminiSub": "IA experta",
   "dailyChallengeReward": "+{{coins}} monedas",
   "simulation": "Simulación",
@@ -172,7 +172,9 @@
   "home": {
     "playCta": "Jugar una partida",
     "playCtaSub": "Todas las variantes",
-    "soloBadge": "JUGAR"
+    "soloBadge": "JUGAR",
+    "shortClassicSub": "4×4 / 4×6 / 6×6",
+    "shortTriplets": "Tripletas"
   },
   "variants": {
     "title": "Elige variante",
@@ -210,5 +212,8 @@
   "diffHard": "Difícil",
   "drawsShort": "E",
   "yourMove": "Tu turno",
-  "wallet": "Cartera"
+  "wallet": "Cartera",
+  "slide3": {
+    "title": "Bots IA"
+  }
 }

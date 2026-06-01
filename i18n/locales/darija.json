@@ -172,7 +172,9 @@
   "home": {
     "playCta": "العب لعبة",
     "playCtaSub": "جميع الأنواع",
-    "soloBadge": "العب"
+    "soloBadge": "العب",
+    "shortClassicSub": "4×4 / 4×6 / 6×6",
+    "shortTriplets": "ثلاثيات"
   },
   "variants": {
     "title": "اختار النوع",
@@ -210,5 +212,8 @@
   "diffHard": "صعيب",
   "drawsShort": "ت",
   "yourMove": "دورك",
-  "wallet": "البورس"
+  "wallet": "البورس",
+  "slide3": {
+    "title": "روبوهات ذكية"
+  }
 }

@@ -105,7 +105,7 @@
   "createSub": "2 to 10 players",
   "join": "Join",
   "joinSub": "By code or list",
-  "vsGemini": "vs Bot",
+  "vsGemini": "vs Gemini",
   "vsGeminiSub": "Expert AI",
   "dailyChallengeReward": "+{{coins}} coins",
   "simulation": "Simulation",
@@ -172,7 +172,9 @@
   "home": {
     "playCta": "Play a game",
     "playCtaSub": "All variants",
-    "soloBadge": "PLAY"
+    "soloBadge": "PLAY",
+    "shortClassicSub": "4x4 / 4x6 / 6x6",
+    "shortTriplets": "Triplets"
   },
   "variants": {
     "title": "Choose variant",
@@ -210,5 +212,8 @@
   "diffHard": "Hard",
   "drawsShort": "D",
   "yourMove": "Your move",
-  "wallet": "Wallet"
+  "wallet": "Wallet",
+  "slide3": {
+    "title": "AI Bots"
+  }
 }

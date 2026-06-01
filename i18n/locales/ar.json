@@ -172,7 +172,9 @@
   "home": {
     "playCta": "ابدأ لعبة",
     "playCtaSub": "جميع الأنواع",
-    "soloBadge": "العب"
+    "soloBadge": "العب",
+    "shortClassicSub": "4×4 / 4×6 / 6×6",
+    "shortTriplets": "ثلاثيات"
   },
   "variants": {
     "title": "اختر النوع",
@@ -210,5 +212,8 @@
   "diffHard": "صعب",
   "drawsShort": "ت",
   "yourMove": "دورك",
-  "wallet": "المحفظة"
+  "wallet": "المحفظة",
+  "slide3": {
+    "title": "ذكاء صناعي"
+  }
 }
