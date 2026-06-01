@@ -81,7 +81,7 @@
   "challengeDesc": "Gana una partida de Ronda con al menos 2 Tringas. ¡50 monedas extra!",
   "startChallenge": "Empezar el reto",
   "vsBot": "vs Bot",
-  "localPlay": "Local",
+  "localPlay": "Juego local",
   "light": "Claro",
   "dark": "Oscuro",
   "system": "Sistema",
@@ -126,8 +126,8 @@
   "statBest": "Mejor",
   "statStreak": "Racha",
   "topPlayers": "Top jugadores",
-  "winsShort": "V",
-  "lossesShort": "D",
+  "winsShort": "G",
+  "lossesShort": "P",
   "walletCoins": "Sally Coins",
   "walletDiamonds": "Diamantes",
   "recentGames": "Partidas recientes",
@@ -204,5 +204,11 @@
     "winStats": "{{moves}} movimientos · Puntuación {{score}}",
     "playAgain": "Jugar de nuevo",
     "quit": "Salir"
-  }
+  },
+  "diffEasy": "Fácil",
+  "diffMedium": "Medio",
+  "diffHard": "Difícil",
+  "drawsShort": "E",
+  "yourMove": "Tu turno",
+  "wallet": "Cartera"
 }

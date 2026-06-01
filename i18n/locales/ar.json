@@ -204,5 +204,11 @@
     "winStats": "{{moves}} حركة · النقاط {{score}}",
     "playAgain": "العب مجدداً",
     "quit": "خروج"
-  }
+  },
+  "diffEasy": "سهل",
+  "diffMedium": "متوسط",
+  "diffHard": "صعب",
+  "drawsShort": "ت",
+  "yourMove": "دورك",
+  "wallet": "المحفظة"
 }

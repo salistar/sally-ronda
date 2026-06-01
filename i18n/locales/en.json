@@ -81,7 +81,7 @@
   "challengeDesc": "Win a game of Ronda with at least 2 Tringas. 50 bonus coins!",
   "startChallenge": "Start Challenge",
   "vsBot": "vs Bot",
-  "localPlay": "Local",
+  "localPlay": "Local play",
   "light": "Light",
   "dark": "Dark",
   "system": "System",
@@ -204,5 +204,11 @@
     "winStats": "{{moves}} moves · Score {{score}}",
     "playAgain": "Play again",
     "quit": "Quit"
-  }
+  },
+  "diffEasy": "Easy",
+  "diffMedium": "Medium",
+  "diffHard": "Hard",
+  "drawsShort": "D",
+  "yourMove": "Your move",
+  "wallet": "Wallet"
 }

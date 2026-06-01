@@ -204,5 +204,11 @@
     "winStats": "{{moves}} حركة · النقط {{score}}",
     "playAgain": "عاود اللعب",
     "quit": "خرج"
-  }
+  },
+  "diffEasy": "ساهل",
+  "diffMedium": "متوسط",
+  "diffHard": "صعيب",
+  "drawsShort": "ت",
+  "yourMove": "دورك",
+  "wallet": "البورس"
 }
