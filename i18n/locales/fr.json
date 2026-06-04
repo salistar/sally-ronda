@@ -215,5 +215,6 @@
     "title": "Bots IA"
   },
   "wallet": "Portefeuille",
-  "yourMove": "À ton tour"
+  "yourMove": "À ton tour",
+  "guestDisplayName": "Invité"
 }

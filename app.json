@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Ronda",
+    "name": "Sally Ronda",
     "slug": "ronda",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -49,7 +49,7 @@
         }
       ]
     ],
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "extra": {
       "eas": {
         "projectId": "sallycards-ronda"
